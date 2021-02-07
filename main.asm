@@ -1,18 +1,22 @@
-include "../include/hardware.inc" ; https://github.com/gbdev/hardware.inc
-include "macros.asm"
-include "constants.asm"
-include "common.asm"
-include "text_box.asm"
-include "avatar.asm"
+include "include/hardware.inc" ; https://github.com/gbdev/hardware.inc
+include "src/macros.asm"
+include "src/constants.asm"
+include "src/common.asm"
+include "src/wram.asm"
+include "src/text.asm"
+include "src/text_box.asm"
+include "src/avatar.asm"
+include "src/vblank.asm"
+include "src/timer.asm"
 
 ;; Interrupts
 
 section "VBlank", rom0[$40]
-    reti
+    jp HandleVBlank
 section "LCD Status", rom0[$48]
     reti
 section "Timer", rom0[$50]
-    reti
+    jp HandleTimer
 section "Serial", rom0[$58]
     reti
 section "Joypad", rom0[$60]
@@ -44,6 +48,7 @@ Start::
     call ClearBGMap
     call CopyTextBoxBorderToBGMap
     call CopyAvatarToBGMap
+    call ConfigureInterrupts
     call EnableLCD
 .gameLoop
     halt
@@ -109,13 +114,13 @@ ClearBGMap::
     ret
 
 Font::
-    incbin "../images/font.2bpp"
+    incbin "images/font.2bpp"
 FontEnd::
 
 TextBox::
-    incbin "../images/text_box.2bpp"
+    incbin "images/text_box.2bpp"
 TextBoxEnd::
 
 Avatar::
-    incbin "../images/avatar.2bpp"
+    incbin "images/avatar.2bpp"
 AvatarEnd::

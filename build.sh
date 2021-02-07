@@ -13,8 +13,10 @@ for image_file in images/*.png; do
     rgbgfx -o ${output} ${image_file}
 done
 
-# must cd into src directory because the include paths are relative to this directory
-cd src
-rgbasm -v -o ../build/main.o main.asm
-rgblink -d -n ../build/${NAME}.sym -o ../build/${NAME}.gb ../build/main.o
-rgbfix -cjsv -k 01 -l 0x33 -m 0x1b -p 0 -r 03 -t ${TITLE} ../build/${NAME}.gb
+# Convert the script into a bin file suitable for importing into ASM.
+# asciitile is a separate project not contained within this repo.
+asciitile ./script.txt
+
+rgbasm -v -o build/main.o main.asm
+rgblink -d -n build/${NAME}.sym -o build/${NAME}.gb build/main.o
+rgbfix -cjsv -k 01 -l 0x33 -m 0x1b -p 0 -r 03 -t ${TITLE} build/${NAME}.gb
