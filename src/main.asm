@@ -3,6 +3,7 @@ include "macros.asm"
 include "constants.asm"
 include "common.asm"
 include "text_box.asm"
+include "avatar.asm"
 
 ;; Interrupts
 
@@ -39,8 +40,10 @@ Start::
     call SelectBGTileData
     call CopyFontToVRAM
     call CopyTextBoxToVRAM
+    call CopyAvatarToVRAM
     call ClearBGMap
     call CopyTextBoxBorderToBGMap
+    call CopyAvatarToBGMap
     call EnableLCD
 .gameLoop
     halt
@@ -73,6 +76,12 @@ CopyTextBoxToVRAM::
     ld bc, TextBoxEnd - TextBox
     jp CopyData
 
+CopyAvatarToVRAM::
+    ld hl, AVATAR_VRAM ; first location of avatar in tile data
+    ld de, Avatar
+    ld bc, AvatarEnd - Avatar
+    jp CopyData
+
 LoadDMGPalette::
     ld a, %11100100 ; white, light gray, dark gray, black
     ld [rBGP], a
@@ -89,7 +98,7 @@ SelectBGTileData::
 ClearBGMap::
     ld hl, _SCRN0 ; BG map address
     ld bc, _SCRN1 - _SCRN0 ; full byte length of BG map
-    ld d, $10 ; blank tile number
+    ld d, $40 ; blank tile number
 .loop
     ld [hl], d
     inc hl
@@ -106,3 +115,7 @@ FontEnd::
 TextBox::
     incbin "../images/text_box.2bpp"
 TextBoxEnd::
+
+Avatar::
+    incbin "../images/avatar.2bpp"
+AvatarEnd::

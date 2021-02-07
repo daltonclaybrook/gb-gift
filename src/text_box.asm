@@ -40,8 +40,7 @@ CopyTextBoxLeftAndRightLinesToBGMap::
     ld hl, $99a0 ; top BG address of left vertical line
     call CopyVerticalBorderLine;
     ld hl, $99b3 ; top BG address of right vertical line
-    call CopyVerticalBorderLine;
-    ret
+    jp CopyVerticalBorderLine;
 
 CopyVerticalBorderLine::
     ld b, 4 ; count of tiles in line
