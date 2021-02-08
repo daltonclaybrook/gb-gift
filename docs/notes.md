@@ -16,5 +16,5 @@ BG map tile pointers are copied from shadow buffer to VRAM during each VBlank pa
 
 Procedure for populating shadow buffer:
 
-- Timer interrupt fires each time a new letter should be written to the screen. (If the slowest timer is still too fast, we can decrement a memory register instead and write a letter when this register reaches zero.)
+- Timer interrupt fires each time a new letter should be written to the screen.
 - 

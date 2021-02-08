@@ -1,1 +1,11 @@
 Hello, World!
+This is a test
+of my new tool to
+create binaries
+of ASCII string
+data!
+
+I hope this new
+tool works well.
+I believe it will
+work just fine.

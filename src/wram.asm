@@ -4,7 +4,19 @@ CHARS_PER_LINE EQU 17
 
 ; The index of the current paragraph being drawn to the buffer. When all lines
 ; of a paragraph have been drawn, this number is incremented.
+; Do we need this?
 wCurrentParagraph
+    ds 1
+
+; The 16-bit index of the next byte in script data to parse. This byte almost always
+; points at a character, but the first byte of each paragraph in the script contains
+; the number of lines in that paragraph.
+wCurrentCharInScript
+    ds 2
+
+; The index of the character in the current line to be drawn next. When this value 
+; is >= 17, this index is reset to zero and the next line is started.
+wCurrentCharInLine
     ds 1
 
 ; The index of the current line being drawn to the buffer in the current
@@ -13,10 +25,9 @@ wCurrentParagraph
 wCurrentLineInParagraph
     ds 1
 
-; The index of the character in the current line to be drawn next. When the drawing
-; procedure encounters a null-terminator in the line, or when this value is >= 17,
-; this index is reset to zero and the next line is started.
-wCurrentCharInLine
+; The count of lines in the current paragraph. This is reloaded with the first byte of
+; each paragraph slice.
+wLineCountOfCurrentParagraph
     ds 1
 
 ; When this value is non-zero, the text is shifted up by one line to simulate
