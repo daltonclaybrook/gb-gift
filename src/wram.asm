@@ -35,6 +35,11 @@ wLineCountOfCurrentParagraph
 wShiftingToNextLine
     ds 1
 
+; When this value is non-zero, the we are waiting for the user to press the joypad
+; before advancing to the next line or paragraph.
+wWaitingToAdvance
+    ds 1
+
 ; Stores BG map data for the current lines that should be draw to the
 ; screen during VBlank.
 wTextBGMapDataShadowBuffer
